@@ -1,7 +1,6 @@
 # Disjoint_Paths
-Implementation of Bhandari's disjoint-path algorithm.
-
-Based on Bhandari's algorithm published in: Bhandari, Ramesh. [Survivable networks: algorithms for diverse routing.](https://link.springer.com/book/9780792383819) Springer Science & Business Media, 1999.
+Implementation of Bhandari's disjoint-path algorithm as published in: 
+    Bhandari, Ramesh. [Survivable networks: algorithms for diverse routing.](https://link.springer.com/book/9780792383819) Springer Science & Business Media, 1999.
 
 We test the implementation using toy examples as well as grids with random edge costs and road networks.  The road networks for North American and California are datasets from research done at the University of Utah and can be found [here](https://www.cs.utah.edu/~lifeifei/SpatialDataset.htm). 
 
