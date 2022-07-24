@@ -9,5 +9,11 @@ Users can test their own graph examples using an edge input csv file with one ro
 
 We include a PuLP linear programming solver for the problem in order to test and verify solutions, but the LP is too slow to run the large instances on.
 
-Finally, we include a basic visualization method to map the graph and solution paths.
+We also include a basic visualization method to map the graph and solution paths.
+
+All functions are in the disjoint_path_functions.py file.
+
+Users can run the examples.py file to solve and produce maps for our testing examples.
+
+Finally, experiments.py runs many repetitions on grid graphs of increasing size with random edge costs and then plots the relationship between graph size and runtime for these runs.
 
