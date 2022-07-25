@@ -4,11 +4,43 @@ import csv
 import numpy as np
 from pulp import *
 from networkx.algorithms.connectivity.edge_kcomponents import bridge_components
+import heapq
 
+
+def Bhandari_dijkstra_mod(graph, s, t):
+    d = {}
+    P = {}
+    d[s] = 0
+    S_ = []
+    neighborhood_s = set(graph.neighbors(s))
+    for v in graph.nodes():
+        if v in neighborhood_s:
+            d[v] = graph.edges[(s,v)]['weight']
+            P[v] = s
+            heapq.heappush(S_,(d[v],v))
+        else:
+            d[v] = float('inf')
+    end = False
+    while not end:
+        min_v = heapq.heappop(S_)[1]
+        if min_v == t:
+            end = True
+        else:
+            for u in graph.neighbors(min_v):
+                if d[min_v]+graph.edges[(min_v,u)]['weight'] < d[u]:
+                    d[u] = d[min_v]+graph.edges[(min_v,u)]['weight']
+                    P[u] = min_v
+                    heapq.heappush(S_,(d[u],u))
+    out_path = [t]
+    pred = P[t]
+    while pred != s:
+        out_path = [pred]+out_path
+        pred = P[pred]
+    return [s]+out_path
 
 #implementation of Bhandari 1999 edge-disjoint path pair
-def Bhandari_disjoint_paths(graph,s,t,k):
-    p0 = nx.bellman_ford_path(graph,s,t)
+def Bhandari_disjoint_paths(graph,s,t,k, shortest_path_method = Bhandari_dijkstra_mod):
+    p0 = shortest_path_method(graph,s,t)
     p0_edges = {(p0[i],p0[i+1]) for i in range(len(p0)-1)}
     for i in range(k-1):
         graph_alt = graph.copy()
@@ -16,18 +48,18 @@ def Bhandari_disjoint_paths(graph,s,t,k):
             graph_alt.remove_edge(e[0],e[1])
             graph_alt.add_edge(e[1],e[0])
             graph_alt.edges[(e[1],e[0])]['weight'] = -1*graph.edges[e]['weight']
-        pi = nx.bellman_ford_path(graph_alt,s,t)
+        pi = shortest_path_method(graph_alt,s,t)
         pi_edges = {(pi[i],pi[i+1]) for i in range(len(pi)-1)}
         dup_edges = {e for e in pi_edges if (e[1],e[0]) in p0_edges}
         p0_edges = p0_edges.union(pi_edges) -  dup_edges - {(e[1],e[0]) for e in dup_edges}
     return p0_edges
 
 #finds path solutions from set of solution's edges
-def paths_from_edge_set(graph, edge_set,s,t,k):
+def paths_from_edge_set(graph, edge_set,s,t,k, shortest_path_method = Bhandari_dijkstra_mod):
     subgraph = nx.edge_subgraph(graph,edge_set).copy()
     out_paths = []
     for i in range(k):
-        pi = nx.bellman_ford_path(subgraph,s,t)
+        pi = shortest_path_method(subgraph,s,t)
         out_paths.append(pi)
         subgraph.remove_edges_from([(pi[i],pi[i+1]) for i in range(len(pi)-1)])
     return out_paths

@@ -48,7 +48,7 @@ path_edges = Bhandari_disjoint_paths(CA_G,sacremento,san_diego,2)
 path_pair = paths_from_edge_set(CA_G,path_edges,sacremento,san_diego,2)
 path_pair_length = path_len_sum(CA_G,path_edges)
 print('CA Minimum Edge-Disjoint Pair Path Length: '+str(path_pair_length))
-path_viz(pared_CA_G.to_undirected(),sacremento,san_diego,path_pair,figs_dir+'CA_test.png', edge_width=.5,node_size = 0,path_width = 4)
+path_viz(CA_G.to_undirected(),sacremento,san_diego,path_pair,figs_dir+'CA_test.png', edge_width=.5,node_size = 0,path_width = 4)
 
 #North America road network
 NorthAm_G = import_graph_from_file('./road_networks/NorthAm_edges.csv','./road_networks/NorthAm_nodes.csv')

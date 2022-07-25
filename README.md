@@ -15,5 +15,5 @@ All functions are in the disjoint_path_functions.py file.
 
 Users can run the examples.py file to solve and produce maps for our testing examples.
 
-Finally, experiments.py runs many repetitions on grid graphs of increasing size with random edge costs and then plots the relationship between graph size and runtime for these runs.
+Finally, experiments.py compares shortest-path methods (Bhandari's modified Dijkstra vs Bellman-Ford) for many repetitions on grid graphs and Erdős-Rényi random graphs of increasing size with random edge costs and then plots the relationship between graph size and runtime for these runs.
 
